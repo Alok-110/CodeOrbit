@@ -3,10 +3,13 @@ import dotenv from "dotenv";
 import connectDB from "./configs/db.js";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/userAuth.js";
+import { connectRedis } from "./configs/redis.js";
+
 
 
 dotenv.config();
 connectDB();
+connectRedis();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
