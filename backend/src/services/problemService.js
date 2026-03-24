@@ -1,4 +1,7 @@
-import { getLanguageById } from "../utils/languageMap";
+import { getLanguageById } from "../utils/languageMap.js";
+import { runBatch } from "./judge0Services.js";
+import Problem from "../models/problemModel.js";
+
 
 export const validateAndCreateProblem = async (data, userId) => {
 
@@ -11,12 +14,12 @@ export const validateAndCreateProblem = async (data, userId) => {
         const submissions = visibleTestCases.map(tc => ({
 
             source_code: element.completeCode,
-            language_id: languageID,
+            language_id: languageId,
             stdin: tc.input,
             expected_output: tc.output
         }))
 
-        const results = await judge0Service.runBatch(submissions)
+        const results = await runBatch(submissions)
 
         const allPassed = results.every(r => r.status_id === 3)
 
