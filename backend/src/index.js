@@ -6,8 +6,7 @@ import authRouter from "./routes/authRoutes.js";
 import { connectRedis } from "./configs/redis.js";
 import problemRouter from "./routes/problemRoutes.js";
 import userRouter from "./routes/userRoutes.js";
-
-
+import { submitRouter } from "./routes/submissionRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -20,6 +19,7 @@ app.use(cookieParser());
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/problems", problemRouter);
+app.use("/problems", submitRouter);
 
 app.listen(process.env.PORT, () => {
 

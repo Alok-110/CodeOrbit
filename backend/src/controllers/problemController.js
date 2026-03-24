@@ -66,7 +66,10 @@ const deleteProblem = async (req, res) => {
 
 export const getAllProblem = async (req, res) => {
   try {
-    const data = await getAllProblemsService();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const data = await getAllProblemsService(page, limit);
 
     res.json({ data });
   } catch (err) {

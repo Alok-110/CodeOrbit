@@ -66,10 +66,14 @@ export const updateProblemService = async (id, data) => {
   return updatedProblem;
 };
 
-export const getAllProblemsService = async () => {
-  return await Problem.find().select("-hiddenTestCases");
-};
+export const getAllProblemsService = async (page, limit) => {
+  const skip = (page - 1) * limit;
 
+  return await Problem.find()
+    .select("-hiddenTestCases")
+    .skip(skip)
+    .limit(limit);
+};
 
 export const getProblemByIdService = async (id) => {
   const problem = await Problem.findById(id).select("-hiddenTestCases");
