@@ -2,8 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./configs/db.js";
 import cookieParser from "cookie-parser";
-import authRouter from "./routes/userAuth.js";
+import authRouter from "./routes/authRoutes.js";
 import { connectRedis } from "./configs/redis.js";
+import problemRouter from "./routes/problemRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 
 
@@ -15,7 +17,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.use("/user", authRouter);
+app.use("/auth", authRouter);
+app.use("/user", userRouter);
+app.use("/problems", problemRouter);
 
 app.listen(process.env.PORT, () => {
 

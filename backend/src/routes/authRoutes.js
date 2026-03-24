@@ -11,6 +11,5 @@ authRouter.post("/register", register);
 authRouter.post("/login", login);
 authRouter.post("/logout", tokenValidator,  logout);
 authRouter.post("/admin/register", tokenValidator, adminOnly,  adminRegister);
-authRouter.get("/getProfile", tokenValidator, getProfile);
 
 export default authRouter;
