@@ -1,4 +1,5 @@
 import { client } from "../configs/redis.js";
+import Submission from "../models/submissionModel.js";
 import User from "../models/userModel.js"
 import validate from "../utils/validator.js";
 import bcrypt from "bcrypt";
@@ -109,5 +110,25 @@ const adminRegister = async (req, res) => {
     }
 };
 
-export { register, login, logout, adminRegister };
+const deleteProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await Submission.deleteMany({ userId });
+
+    await User.findByIdAndDelete(userId);
+
+    res.json({ message: "Profile deleted successfully" });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export { register, login, logout, adminRegister, deleteProfile };
 

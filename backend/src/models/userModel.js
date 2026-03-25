@@ -42,7 +42,8 @@ const userSchema = new mongoose.Schema({
 
     problemSolved: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Problem"
+        ref: "Problem",
+        unique: true
     }]
 }, {
     timestamps: true
