@@ -22,7 +22,7 @@ problemRouter.delete("/:id", tokenValidator, adminOnly, deleteProblem);
 problemRouter.get("/solved", tokenValidator, solvedProblem);
 problemRouter.get("/", tokenValidator, getAllProblem);
 problemRouter.get("/:id", tokenValidator, getProblemById);
-problemRouter.get("/submitted/:pid", tokenValidator, submittedProblem);
+problemRouter.get("/:pid/submissions", tokenValidator, submittedProblem);
 
 export default problemRouter;
 
