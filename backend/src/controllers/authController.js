@@ -25,11 +25,23 @@ const register = async (req, res) => {
 
     res.cookie("token", token, {maxAge : 60*60*1000});
 
-    res.status(201).send("User created successfully");
+    
+    res.status(201).json({
+      message: "User created successfully",
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        emailId: user.emailId,
+        role: user.role
+      }
+    });
 
-   }catch(err){
-        res.status(500).send("Error" + err);
    }
+   catch(err){
+    res.status(400).json({
+        message: err.message
+    });
+}
 }
 
 const login = async (req,res) => {
@@ -56,7 +68,15 @@ const login = async (req,res) => {
         const token = jwt.sign({_id: user._id, emailId: emailId, role:user.role}, process.env.JWT_SECRET, {expiresIn: "1h"});
         res.cookie("token", token, {maxAge : 60*60*1000});
 
-        res.status(200).send("Login successful");
+        res.status(201).json({
+            message: "User created successfully",
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                emailId: user.emailId,
+                role: user.role
+            }
+        });
 
     }
     catch(err){

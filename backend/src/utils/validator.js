@@ -20,9 +20,8 @@ const validate = (data) => {
     }
 
     if(!validator.isAlpha(data.firstName)){
-
-        throw new Error("First name should conatin all capital letters");
-    }
+    throw new Error("First name should contain only letters");
+}
 
 }
 
