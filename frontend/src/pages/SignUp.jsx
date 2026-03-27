@@ -149,14 +149,17 @@ function StrengthMeter({ pw }) {
 
 // ── Component ───────────────────────────────────────────────────────
 function SignUp() {
-  // ── ALL ORIGINAL LOGIC UNTOUCHED ──
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isAuthenticated, loading, error } = useSelector(s => s.auth)
   const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: zodResolver(signUpSchema) })
   useEffect(() => { if (isAuthenticated) navigate("/") }, [isAuthenticated, navigate])
-  const onSubmit = (data) => { dispatch(registerUser(data)) }
-  // ── END ORIGINAL LOGIC ──
+  const onSubmit = (data) => {
+  if (loading) return; // prevent multiple clicks
+  dispatch(registerUser(data));
+}
+ 
 
   const [showPw, setShowPw] = useState(false)
   const pw = watch("password", "")
