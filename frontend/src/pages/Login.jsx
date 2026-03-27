@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { loginUser } from "../authSlice"
 import { useNavigate } from "react-router"
+import axiosClient from "../utils/axiosClient"
 
 // ── schema untouched ────────────────────────────────────────────────
 const signUpSchema = z.object({
