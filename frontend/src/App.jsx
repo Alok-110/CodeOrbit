@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { checkAuth } from "./authSlice"
 import ProblemsPage from "./pages/ProblemsPage"
+import ProblemSolverPage from "./pages/problemSolverPage"
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -42,12 +43,12 @@ function App() {
         path="/problems"
         element={isAuthenticated ? <ProblemsPage /> : <Navigate to="/login" replace />}
       />
-      {/* <Route
+
+      <Route
         path="/problems/:id"
-        element={isAuthenticated ? <ProblemDetail /> : <Navigate to="/login" replace />}
-      /> */}
-    </Routes>
-   
+        element={isAuthenticated ? <ProblemSolverPage /> : <Navigate to="/login" replace />}
+      />
+    </Routes>   
   );
 }
 
