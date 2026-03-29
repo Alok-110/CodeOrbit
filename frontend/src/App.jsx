@@ -44,10 +44,8 @@ function App() {
         element={isAuthenticated ? <ProblemsPage /> : <Navigate to="/login" replace />}
       />
 
-      <Route
-        path="/problems/:id"
-        element={isAuthenticated ? <ProblemSolverPage /> : <Navigate to="/login" replace />}
-      />
+      <Route path="/problems/:id"      element={isAuthenticated ? <ProblemSolverPage /> : <Navigate to="/login" replace />} />
+      <Route path="/problems/:id/:tab" element={isAuthenticated ? <ProblemSolverPage /> : <Navigate to="/login" replace />} />
     </Routes>   
   );
 }

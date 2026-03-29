@@ -2,7 +2,6 @@ export const getLanguageById = (language) => {
   const key = language.toLowerCase().trim();
 
   const languageMap = {
-    "cpp": 54,
     "c++": 54,
     "python": 71,
     "py": 71,
