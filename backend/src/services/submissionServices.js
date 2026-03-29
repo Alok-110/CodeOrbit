@@ -65,14 +65,6 @@ export const submitCodeService = async (userId, problemId, code, language) => {
 
   await submission.save();
 
-  // const user = await User.findById(userId);
-  // if(!user.problemSolved.includes(problemId)){
-  //   user.problemSolved.push(problemId);
-  //   await user.save();
-  // }
-
-  //avoids race conditin extra db calls and is better than above
-
   // 7. update user if accepted
   if (status === "Accepted") {
     await User.findByIdAndUpdate(userId, {

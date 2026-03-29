@@ -24,9 +24,10 @@ export const submitBatch = async (submissions) => {
 
     return response.data; 
   } catch (error) {
-    console.error("Error in submitBatch:", error.message);
-    throw error;
-  }
+      console.error("Error in submitBatch:", error.message)
+      console.error("judge0 response:", error.response?.data) 
+      throw error;
+    }
 };
 
 export const submitToken = async (resultToken) => {
@@ -58,7 +59,8 @@ export const submitToken = async (resultToken) => {
 
       await wait(1000);
     } catch (error) {
-      console.error("Error in submitToken:", error.message);
+      console.error("Error in submitBatch:", error.message)
+      console.error("judge0 response:", error.response?.data) // ← add this
       throw error;
     }
   }
