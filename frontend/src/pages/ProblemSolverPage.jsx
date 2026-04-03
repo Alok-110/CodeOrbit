@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import Editor, { loader } from "@monaco-editor/react"
-import axiosClient from "../utils/axiosClient"
-
+import axiosClient from "../utils/axiosClient.js"
+import OrboAI from "../components/OrboAI"
 
 // ─────────────────────────────────────────────────────────────────────
 // ICONS
@@ -71,20 +71,25 @@ const IconSpinner = ({ size = 14, color = "#60A5FA" }) => (
   }} />
 )
 
-// ─────────────────────────────────────────────────────────────────────
-// CONSTANTS
-// ─────────────────────────────────────────────────────────────────────
+const IconOrboTab = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+    <circle cx="8.5" cy="10.5" r="1.5" fill="currentColor"/>
+    <circle cx="15.5" cy="10.5" r="1.5" fill="currentColor"/>
+    <path d="M8 15.5 Q12 18.5 16 15.5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+  </svg>
+)
 const LANG_TEMPLATES = {
   javascript: `/**\n * @param {number[]} nums\n * @param {number} target\n * @return {number[]}\n */\nvar solution = function(input) {\n  // Your solution here\n\n};`,
   python:     `class Solution:\n    def solve(self, input):\n        # Your solution here\n        pass`,
-  "c++":        `#include <bits/stdc++.h>\nusing namespace std;\n\nclass Solution {\npublic:\n    auto solve(auto input) {\n        // Your solution here\n    }\n};`,
+  cpp:        `#include <bits/stdc++.h>\nusing namespace std;\n\nclass Solution {\npublic:\n    auto solve(auto input) {\n        // Your solution here\n    }\n};`,
   java:       `class Solution {\n    public Object solve(Object input) {\n        // Your solution here\n        return null;\n    }\n}`,
 }
 
 const LANGUAGES = [
   { label: "JavaScript", value: "javascript" },
   { label: "Python",     value: "python"     },
-  { label: "C++",        value: "c++"        },
+  { label: "C++",        value: "cpp"        },
   { label: "Java",       value: "java"       },
 ]
 
@@ -95,8 +100,8 @@ const DIFF_CONFIG = {
 }
 
 // extension helper
-const ext = { javascript: "js", python: "py", "c++": "cpp", java: "java" }
-const toMonacoLang = { javascript: "javascript", python: "python", "c++": "cpp", java: "java" }
+const ext = { javascript: "js", python: "py", cpp: "cpp", java: "java" }
+
 // ─────────────────────────────────────────────────────────────────────
 // MONACO THEME — defined once
 // ─────────────────────────────────────────────────────────────────────
@@ -499,7 +504,10 @@ export default function ProblemSolverPage() {
         .lt-tab.active { color: #F1F3F5; }
         .lt-tab.active::after { opacity: 1; }
 
-        /* scroll area */
+        .lt-tab.orbo-tab { color: rgba(255,180,0,0.5); }
+        .lt-tab.orbo-tab:hover { color: #FFB400; }
+        .lt-tab.orbo-tab.active { color: #FFB400; }
+        .lt-tab.orbo-tab.active::after { background: #FFB400; }
         .psp-scroll {
           flex: 1; overflow-y: auto; padding: 1.5rem 1.25rem;
           scrollbar-width: thin; scrollbar-color: #2C2F35 transparent;
@@ -753,10 +761,11 @@ export default function ProblemSolverPage() {
                   { key: "description", label: "Description", icon: <IconCode /> },
                   { key: "editorial",   label: "Editorial",   icon: <IconBook /> },
                   { key: "submissions", label: "Submissions", icon: <IconList /> },
+                  { key: "orbo",        label: "Ask Orbo",    icon: <IconOrboTab />, gold: true },
                 ].map(t => (
                   <button
                     key={t.key}
-                    className={`lt-tab ${tab === t.key ? "active" : ""}`}
+                    className={`lt-tab ${tab === t.key ? "active" : ""} ${t.gold ? "orbo-tab" : ""}`}
                     onClick={() => goTab(t.key)}
                   >
                     {t.icon} {t.label}
@@ -833,7 +842,15 @@ export default function ProblemSolverPage() {
                 </div>
               )}
 
-              {/* ── SUBMISSIONS ── */}
+              {/* ── ORBO AI ── */}
+              {tab === "orbo" && (
+                <OrboAI
+                  problemId={id}
+                  code={code}
+                  language={language}
+                  problemTitle={problem?.title}
+                />
+              )}
               {tab === "submissions" && (
                 <div className="psp-scroll">
                   {subsLoading ? (
@@ -896,11 +913,7 @@ export default function ProblemSolverPage() {
 
               {/* monaco */}
               <div className="editor-area">
-                <MonacoEditor 
-                  value={code} 
-                  onChange={setCode} 
-                  language={toMonacoLang[language] || language}  // ← map c++ → cpp for Monaco only
-                />
+                <MonacoEditor value={code} onChange={setCode} language={language} />
               </div>
 
               {/* vertical divider */}
@@ -1074,3 +1087,5 @@ export default function ProblemSolverPage() {
     </>
   )
 }
+
+
