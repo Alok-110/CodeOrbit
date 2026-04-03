@@ -8,8 +8,9 @@ import problemRouter from "./routes/problemRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import { submitRouter } from "./routes/submissionRoutes.js";
 import cors from "cors";
-
+import aiRouter from "./routes/aiRoutes.js";
 dotenv.config();
+
 connectDB();
 connectRedis();
 const app = express();
@@ -26,6 +27,7 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/problems", problemRouter);
 app.use("/problems", submitRouter);
+app.use("/ai", aiRouter);
 
 app.listen(process.env.PORT, () => {
 
