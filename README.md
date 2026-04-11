@@ -1,6 +1,6 @@
 # CodeOrbit
 
-A full-stack competitive programming platform — think LeetCode, built from scratch. Solve DSA problems, run code against test cases, and get AI-powered hints from **Orbo**, a context-aware tutor that sees your code and your last failed test case.
+A full-stack competitive programming platform, built from scratch. Solve DSA problems, run code against test cases, and get AI-powered hints from **Orbo**, a context-aware tutor that sees your code and your last failed test case.
 
 ---
 
